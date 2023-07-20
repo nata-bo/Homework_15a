@@ -12,3 +12,10 @@ button{
     border-radius: 10px;
     background-color: rgb(140, 221, 224);
 }
+h1{
+    text-align: center;
+}
+.dogPic{
+    width: 450px;
+    height: 350px;
+}

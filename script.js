@@ -4,23 +4,32 @@
 // используя fetch и API сервера https://dog.ceo/api/breeds/image/random
 
 const btnPic = document.getElementById("btn_pic");
-const picBlock = document.getElementById("pic_block");
+const dogImage = document.getElementById("dogImage");
 let url = "https://dog.ceo/api/breeds/image/random";
 
-btnPic.addEventListener("click", ()=>{
-    getImage();
-});
+btnPic.addEventListener("click", getImage);
 
 function getImage() {
-    let response = fetch(url);
-    response.then((response) => {
-        dataPromise = response.json();
-        dataPromise.then((data) => {
-            const dogImage = document.getElementById("dogImage");
-            dogImage.src = data.message;
-        
-        });
+  fetch(url)
+    .then((response) => {
+      if (response.ok) {
+        return response.json();
+      } else {
+        return Promise.reject(
+          new Error(response.status + " " + response.statusText)
+        );
+      }
+    })
+    .then((res) => {
+      if (res.status == "success") {
+        dogImage.src = res.message;
+      } else {
+        return ProcessingInstruction.reject(
+          new Error("something goes wrong! Status " + res.status)
+        );
+      }
+    })
+    .catch((err) => {
+      console.log(err);
     });
-       
 }
-
